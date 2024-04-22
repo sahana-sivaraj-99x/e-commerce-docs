@@ -1,0 +1,149 @@
+apiVersion: scaffolder.backstage.io/v1beta3
+kind: Template
+metadata:
+  name: nextjs-backend-template
+  title: Create an ecommerce template with next js 
+  description: Create an ecommerce template with next js 
+  tags:
+    - reference-architecture
+    - recommended
+    - e-commerce
+    - nextjs
+    - typescript
+spec:
+  owner: user:99xadmin
+  system: ProductCentral
+  type: service
+
+  parameters:
+    - title: Provide information about the new component
+      required:
+        - orgName
+        - repoName
+        - owner
+        - databaseUrl
+        - awsAccessKey
+        - awsSecretKey
+        - awsRegion
+        - s3bucketname
+      properties:
+        orgName:
+          title: Organization Name
+          type: string
+        repoName:
+          title: Repository Name
+          type: string
+        description:
+          title: Description
+          type: string
+          description: Help others understand what this component is for
+        databaseUrl:
+          title: database Url
+          type: string
+        owner:
+          title: Owner
+          type: string
+          ui:field: EntityPicker
+          ui:options:
+            catalogFilter:
+              kind:
+                - Group
+                - User
+        awsAccessKey:
+          title: AWS account Access Key
+          type: string
+          description: The Access key for your AWS account
+          ui:widget: password
+        awsSecretKey:
+          title: AWS account secret
+          type: string
+          description: The secret value for your AWS account
+          ui:widget: password
+        s3bucketname:
+          title: AWS S3 bucket name
+          type: string
+          description: The S3 bucket name for your AWS account
+        awsRegion:
+          title: AWS Region
+          type: string
+          description: The region to deploy to in your AWS account
+          enum:
+            - ap-southeast-1
+            - ap-south-1      
+        CloudPlatformToDeploy:
+          title: Cloud Platform
+          type: string
+          description: The region to deploy to in your AWS account
+          enum:
+            - Azure
+            - AWS
+            - GCP 
+    - title: Choose a location
+      required:
+        - repoUrl
+      properties:
+        repoUrl:
+          title: Repository Location
+          type: string
+          ui:field: RepoUrlPicker
+          ui:options:
+            allowedHosts:
+              - github.com
+
+       
+  steps:
+    - id: sourceCodeTemplate
+      name: Generating the Source Code Component
+      action: fetch:template
+      input:
+        url: ./skeleton
+        copyWithoutTemplating:
+          - .github/workflows/
+          # - "**/.github/**"
+          # - "./**/.github/**"
+        values:
+          orgName: ${{ parameters.orgName }}
+          repoName: ${{ parameters.repoName }}
+          owner: ${{ parameters.owner }}
+          system: ${{ parameters.system }}
+          applicationType: api
+          description: ${{ parameters.description }}
+          databaseUrl: ${{parameters.databaseUrl}}
+          sourceControl: github.com
+
+    - id: publish
+      name: Publishing to the Source Code Repository
+      action: publish:github
+      input:
+        allowedHosts: ['github.com']
+        description: ${{ parameters.description }}
+        repoUrl: ${{parameters.repoUrl}}
+        defaultBranch: main
+    
+    # - id: github-action
+    #   name: Trigger GitHub Action
+    #   action: github:actions:dispatch
+    #   input:
+    #     workflowId: 'techdocs.yml' # GitHub Action workflow ID
+    #     repoUrl: ${{parameters.repoUrl}}
+    #     branchOrTagName: 'main' # The branch to run this action on
+    #     workflowInputs:
+    #       awsAccessKey: ${{ parameters.awsAccessKey }}
+    #       awsSecretKey: ${{ parameters.awsSecretKey }}
+    #       awsRegion: ${{ parameters.awsRegion }}
+    #       bucketName: ${{ parameters.s3bucketname }}
+
+    - id: register
+      name: Registering the Catalog Info Component
+      action: catalog:register
+      input:
+        repoContentsUrl: ${{ steps.publish.output.repoContentsUrl }}
+        catalogInfoPath: /catalog-info.yaml
+
+  output:
+    links:
+      - title: Open the Source Code Repository
+        url: ${{ steps.publish.output.remoteUrl }}
+      - title: Open the Catalog Info Component
+        icon: catalog
+        entityRef: ${{ steps.register.output.entityRef }}
