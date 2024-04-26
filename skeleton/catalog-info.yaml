@@ -8,6 +8,10 @@ metadata:
   annotations:
     # github.com/project-slug: sagar0419/aws-ec2
     backstage.io/techdocs-ref: dir:.
+    sonarqube.org/project-key: sahana-sivaraj-99x_e-commerce-docs
+    snyk.io/org-id: c6467e61-5fc2-4f7a-b56b-0f4912257c1f
+    snyk.io/target-id: c06a52f0-3288-490f-88b3-cb6d2f12c2f3
+    snyk.io/project-ids: 379ceb8b-1fc9-417a-8b76-e46a4ac1ef9c
 
 spec:
   type: website
