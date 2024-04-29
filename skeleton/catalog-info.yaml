@@ -6,7 +6,7 @@ metadata:
   description: ${{values.description | dump}}
   {%- endif %}
   annotations:
-    # github.com/project-slug: sagar0419/aws-ec2
+    github.com/project-slug: sahana-sivaraj-99x/e-commerce-docs
     backstage.io/techdocs-ref: dir:.
     sonarqube.org/project-key: sahana-sivaraj-99x_e-commerce-docs
     snyk.io/org-id: c6467e61-5fc2-4f7a-b56b-0f4912257c1f
