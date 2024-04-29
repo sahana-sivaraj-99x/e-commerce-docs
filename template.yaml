@@ -109,6 +109,10 @@ spec:
           applicationType: api
           description: ${{ parameters.description }}
           databaseUrl: ${{parameters.databaseUrl}}
+          awsAccessKey: ${{ parameters.awsAccessKey }}
+          awsSecretKey: ${{ parameters.awsSecretKey }}
+          awsRegion: ${{ parameters.awsRegion }}
+          bucketName: ${{ parameters.s3bucketname }}
           sourceControl: github.com
 
     - id: publish
