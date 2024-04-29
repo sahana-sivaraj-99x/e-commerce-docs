@@ -12,7 +12,7 @@ metadata:
     snyk.io/org-id: c6467e61-5fc2-4f7a-b56b-0f4912257c1f
     snyk.io/target-id: c06a52f0-3288-490f-88b3-cb6d2f12c2f3
     snyk.io/project-ids: 69e5a9a3-462d-401e-94b5-246e1bf7ff17,379ceb8b-1fc9-417a-8b76-e46a4ac1ef9c,88e41f87-5f2d-4b65-8262-ae6e4ce04167,ae231d1a-a2bd-4174-8411-a9056db9f549
-    grafana/overview-dashboard: https://sahanasivaraj99x.grafana.net/d/XU8HAD5Gk/usage-insights-1-overview?orgId=1
+    grafana/overview-dashboard: https://sahanasivaraj99x.grafana.net/d/ddk6heap3y77ke/mongodb-dashboard?orgId=1
 
 spec:
   type: website
