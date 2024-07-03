@@ -1,5 +1,5 @@
 # inherit from a existing image to add the functionality
-FROM node:20.11.1
+FROM node:20.15
  
 # Set the working directory
 WORKDIR /app
